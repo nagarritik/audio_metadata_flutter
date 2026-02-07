@@ -1,6 +1,7 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'audio_metadata_flutter_method_channel.dart';
+import 'src/audio_metadata.dart';
 
 abstract class AudioMetadataFlutterPlatform extends PlatformInterface {
   /// Constructs a AudioMetadataFlutterPlatform.
@@ -8,7 +9,8 @@ abstract class AudioMetadataFlutterPlatform extends PlatformInterface {
 
   static final Object _token = Object();
 
-  static AudioMetadataFlutterPlatform _instance = MethodChannelAudioMetadataFlutter();
+  static AudioMetadataFlutterPlatform _instance =
+      MethodChannelAudioMetadataFlutter();
 
   /// The default instance of [AudioMetadataFlutterPlatform] to use.
   ///
@@ -23,7 +25,7 @@ abstract class AudioMetadataFlutterPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+  Future<AudioMetadata?> getMetadata(String filePath) {
+    throw UnimplementedError('getMetadata() has not been implemented.');
   }
 }

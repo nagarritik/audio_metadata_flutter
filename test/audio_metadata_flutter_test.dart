@@ -7,23 +7,28 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 class MockAudioMetadataFlutterPlatform
     with MockPlatformInterfaceMixin
     implements AudioMetadataFlutterPlatform {
-
   @override
-  Future<String?> getPlatformVersion() => Future.value('42');
+  @override
+  Future<AudioMetadata?> getMetadata(String filePath) {
+    return Future.value(AudioMetadata(title: 'Test Title'));
+  }
 }
 
 void main() {
-  final AudioMetadataFlutterPlatform initialPlatform = AudioMetadataFlutterPlatform.instance;
+  final AudioMetadataFlutterPlatform initialPlatform =
+      AudioMetadataFlutterPlatform.instance;
 
   test('$MethodChannelAudioMetadataFlutter is the default instance', () {
     expect(initialPlatform, isInstanceOf<MethodChannelAudioMetadataFlutter>());
   });
 
-  test('getPlatformVersion', () async {
+  test('getMetadata', () async {
     AudioMetadataFlutter audioMetadataFlutterPlugin = AudioMetadataFlutter();
-    MockAudioMetadataFlutterPlatform fakePlatform = MockAudioMetadataFlutterPlatform();
+    MockAudioMetadataFlutterPlatform fakePlatform =
+        MockAudioMetadataFlutterPlatform();
     AudioMetadataFlutterPlatform.instance = fakePlatform;
 
-    expect(await audioMetadataFlutterPlugin.getPlatformVersion(), '42');
+    final metadata = await audioMetadataFlutterPlugin.getMetadata('dummy_path');
+    expect(metadata?.title, 'Test Title');
   });
 }

@@ -1,7 +1,7 @@
 name: audio_metadata_flutter
-description: "A new Flutter plugin project."
+description: "A Flutter plugin to extract metadata from audio files on Android."
 version: 1.0.0
-homepage:
+homepage: https://github.com/nagarritik/audio_metadata_flutter
 
 environment:
   sdk: ^3.10.8

@@ -5,23 +5,27 @@ import 'package:audio_metadata_flutter/audio_metadata_flutter_method_channel.dar
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  MethodChannelAudioMetadataFlutter platform = MethodChannelAudioMetadataFlutter();
+  MethodChannelAudioMetadataFlutter platform =
+      MethodChannelAudioMetadataFlutter();
   const MethodChannel channel = MethodChannel('audio_metadata_flutter');
 
   setUp(() {
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
-      channel,
-      (MethodCall methodCall) async {
-        return '42';
-      },
-    );
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
+          if (methodCall.method == 'getMetadata') {
+            return {'title': 'Test Title'};
+          }
+          return null;
+        });
   });
 
   tearDown(() {
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, null);
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, null);
   });
 
-  test('getPlatformVersion', () async {
-    expect(await platform.getPlatformVersion(), '42');
+  test('getMetadata', () async {
+    final metadata = await platform.getMetadata('dummy_path');
+    expect(metadata?.title, 'Test Title');
   });
 }

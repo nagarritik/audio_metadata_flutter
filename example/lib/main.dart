@@ -1,63 +1,44 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:audio_metadata_flutter/audio_metadata_flutter.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MaterialApp(home: HomePage()));
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-  final _audioMetadataFlutterPlugin = AudioMetadataFlutter();
+class _HomePageState extends State<HomePage> {
+  String _info = 'Loading...';
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+    _loadMetadata();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      platformVersion =
-          await _audioMetadataFlutterPlugin.getPlatformVersion() ?? 'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
+  Future<void> _loadMetadata() async {
+    // 1. Create plugin instance
+    final audioMetadata = AudioMetadataFlutter();
 
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
+    // 2. Get metadata (Use a real path from your device)
+    final data = await audioMetadata.getMetadata(
+      '/storage/emulated/0/Download/sample.mp3',
+    );
 
+    // 3. Update UI
     setState(() {
-      _platformVersion = platformVersion;
+      _info = 'Title: ${data?.title}\nArtist: ${data?.artist}';
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
-        ),
-      ),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Plugin Example')),
+      body: Center(child: Text(_info, textAlign: TextAlign.center)),
     );
   }
 }
