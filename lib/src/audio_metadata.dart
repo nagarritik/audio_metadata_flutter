@@ -1,22 +1,53 @@
 import 'dart:typed_data';
 
+/// A class that represents metadata extracted from an audio file.
 class AudioMetadata {
+  /// The title of the audio track.
   final String? title;
+
+  /// The artist of the audio track.
   final String? artist;
+
+  /// The album containing the audio track.
   final String? album;
+
+  /// The artist of the album.
   final String? albumArtist;
+
+  /// The author of the audio track.
   final String? author;
+
+  /// The writer of the audio track.
   final String? writer;
+
+  /// The composer of the audio track.
   final String? composer;
+
+  /// The genre of the audio track.
   final String? genre;
+
+  /// The date the audio track was recorded or released.
   final String? date;
+
+  /// The year the audio track was released.
   final String? year;
+
+  /// The track number of the audio track.
   final String? trackNumber;
+
+  /// The duration of the audio track in milliseconds.
   final int? duration;
+
+  /// The bitrate of the audio track.
   final int? bitrate;
+
+  /// The MIME type of the audio track.
   final String? mimetype;
+
+  /// The embedded artwork image data.
   final Uint8List? artwork;
 
+  /// Creates a new [AudioMetadata] instance.
   AudioMetadata({
     this.title,
     this.artist,
@@ -35,6 +66,7 @@ class AudioMetadata {
     this.artwork,
   });
 
+  /// Creates an [AudioMetadata] instance from a map.
   factory AudioMetadata.fromMap(Map<Object?, Object?> map) {
     return AudioMetadata(
       title: map['title'] as String?,
