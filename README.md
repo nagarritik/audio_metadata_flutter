@@ -30,7 +30,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  audio_metadata_flutter: ^1.0.0
+  audio_metadata_flutter: ^2.0.0
 ```
 
 ## Usage
@@ -58,7 +58,7 @@ if (metadata != null) {
 
 ## Android Setup
 
-This plugin requires a minimum Android SDK version of 21.
+This plugin requires a minimum Android SDK version of 24 (Android 7.0+).
 
 Ensure you have the necessary permissions to access the files you are trying to read metadata from (e.g., `READ_EXTERNAL_STORAGE` or focused storage access).
 

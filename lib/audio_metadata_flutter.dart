@@ -3,7 +3,7 @@
 /// This library provides the [AudioMetadataFlutter] class to retrieve metadata
 /// such as title, artist, album, duration, and artwork from local audio files.
 
-library audio_metadata_flutter;
+library;
 
 import 'audio_metadata_flutter_platform_interface.dart';
 import 'src/audio_metadata.dart';
